@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#143d32" />
+  <title>PDF to Flipbook Reader</title>
+
+  <!-- PWA / Installable App -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/icon-192.png" />
+
+  <!-- Page Flip Library -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/css/page-flip.min.css" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+      <div class="title-wrap">
+        <h1 id="bookTitle">PDF to Flipbook</h1>
+        <p>Upload PDF → read like a real book</p>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="zoomOutBtn" aria-label="Zoom out">−</button>
+        <button class="icon-btn" id="zoomInBtn" aria-label="Zoom in">＋</button>
+        <button class="icon-btn" id="nightBtn" aria-label="Night mode">☾</button>
+      </div>
+    </header>
+
+    <!-- Side Drawer -->
+    <aside class="drawer" id="drawer">
+      <div class="drawer-card">
+        <button class="close-btn" id="closeDrawer">×</button>
+        <h2>Library</h2>
+        <p>This app works offline after first load. Your PDF stays on your phone.</p>
+        <label class="drawer-upload">
+          Upload another PDF
+          <input type="file" id="drawerPdfInput" accept="application/pdf" />
+        </label>
+        <button id="resetBtn" class="drawer-button">Go to first page</button>
+        <button id="fullscreenBtn" class="drawer-button">Fullscreen</button>
+      </div>
+    </aside>
+
+    <!-- Upload Screen -->
+    <section class="upload-panel" id="uploadPanel">
+      <div class="upload-card">
+        <div class="upload-icon">⇪</div>
+        <h2>Upload your PDF book</h2>
+        <p>Select a PDF from your mobile and convert it into a smooth virtual flipbook.</p>
+
+        <label class="primary-upload">
+          Choose PDF File
+          <input type="file" id="pdfInput" accept="application/pdf" />
+        </label>
+
+        <div class="hint-box">
+          <span>Tip:</span> For best performance use PDF files under 80 MB.
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading -->
+    <section class="loading-panel hidden" id="loadingPanel">
+      <div class="loader"></div>
+      <h2>Preparing your book...</h2>
+      <p id="progressText">Loading PDF</p>
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </section>
+
+    <!-- Reader -->
+    <section class="reader hidden" id="reader">
+      <div class="book-stage" id="bookStage">
+        <button class="side-nav left" id="prevSideBtn" aria-label="Previous page">‹</button>
+        <div class="book-scale" id="bookScale">
+          <div id="book"></div>
+        </div>
+        <button class="side-nav right" id="nextSideBtn" aria-label="Next page">›</button>
+      </div>
+
+      <footer class="control-dock">
+        <button class="dock-btn" id="firstBtn" aria-label="First page">|‹</button>
+        <button class="dock-btn" id="prevBtn" aria-label="Previous page">‹</button>
+        <div class="page-info">
+          <span id="currentPage">0</span> / <span id="totalPages">0</span>
+        </div>
+        <button class="dock-btn" id="nextBtn" aria-label="Next page">›</button>
+        <button class="dock-btn" id="lastBtn" aria-label="Last page">›|</button>
+        <button class="dock-btn" id="fullscreenDockBtn" aria-label="Fullscreen">⛶</button>
+      </footer>
+
+      <div class="mini-tools">
+        <span>Zoom</span>
+        <input type="range" id="zoomRange" min="80" max="140" value="100" />
+      </div>
+    </section>
+
+    <div class="toast hidden" id="toast"></div>
+  </main>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+
+  <!-- App JS -->
+  <script src="script.js"></script>
+</body>
+</html>
